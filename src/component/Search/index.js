@@ -13,6 +13,10 @@ class Search extends React.PureComponent {
       companies: [],
     });
   }
+  handleChange(event){
+      console.log(event.target.value);
+      
+  }
 
   render() {
     return (
@@ -23,6 +27,7 @@ class Search extends React.PureComponent {
               <FormControl
                 placeholder="Search"
                 aria-label="MTC"
+                onChange={this.handleChange.bind(this)}
               />
               <ListGroup>
 

@@ -19,6 +19,7 @@ class Search extends React.PureComponent {
       companies: [],
     });
   }
+  
   updateQuery(result){
     if (result.status == true) {
       const companies = result.companies;

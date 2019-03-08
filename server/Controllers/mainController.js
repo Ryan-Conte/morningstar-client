@@ -19,8 +19,8 @@ module.exports = {
         });
     },
     getCompany : function(req, res){
-      let ticker = req.params.ticker;
-      query.all('SELECT * from company', (err, rows) => {
+      let company = req.params.company;
+      query.all(`SELECT * FROM company WHERE companyName LIKE '%${company}%' `, (err, rows) => {
           if (err) {
             res.json({status:false,error:"Error quering DB"});
             throw err;

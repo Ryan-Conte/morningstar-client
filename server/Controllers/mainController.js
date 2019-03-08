@@ -18,6 +18,7 @@ module.exports = {
           res.json({status:true,companies:rows});
         });
     },
+
     getCompany : function(req, res){
       let company = req.params.company;
       query.all(`SELECT * FROM company WHERE companyName LIKE '%${company}%' `, (err, rows) => {
@@ -28,7 +29,6 @@ module.exports = {
           res.json({status:true,companies:rows});
         });
     },
-
 
     getHoldings : function(req, res){
       let ticker = req.params.ticker;

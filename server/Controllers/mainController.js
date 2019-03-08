@@ -21,7 +21,7 @@ module.exports = {
 
     getCompany : function(req, res){
       let company = req.params.company;
-      query.all(`SELECT * FROM company WHERE companyName LIKE '%${company}%' `, (err, rows) => {
+      query.all(`SELECT * FROM company WHERE companyName LIKE '%${company}%' ORDER BY holdingsAmount DESC `, (err, rows) => {
           if (err) {
             res.json({status:false,error:"Error quering DB"});
             throw err;

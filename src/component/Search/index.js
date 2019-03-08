@@ -1,6 +1,9 @@
 import React from 'react';
 import styled from 'styled-components';
 import {Container,Row, Col, ListGroup,FormControl} from 'react-bootstrap';
+import {
+  Link
+} from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {
@@ -56,7 +59,7 @@ class Search extends React.PureComponent {
               />
               <ListGroup>
                 {this.state.companies.map((item, i) => (
-                  <ListGroup.Item key={i}>{item.companyName} ({item.holdingsAmount} Holdings)</ListGroup.Item>
+                  <Link key={i} to={item.companyTicker}> <ListGroup.Item> {item.companyName} ({item.holdingsAmount} Holdings)</ListGroup.Item></Link>
                 ))}
               </ListGroup>
     

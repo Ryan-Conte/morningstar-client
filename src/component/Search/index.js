@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import {Container,Row, Col, ListGroup,FormControl} from 'react-bootstrap';
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import {
+  getSearchResults
+} from '../../actions'
 
 class Search extends React.PureComponent {
   constructor(props) {
@@ -13,9 +16,31 @@ class Search extends React.PureComponent {
       companies: [],
     });
   }
+  updateQuery(result){
+    if (result.status == true) {
+      const companies = result.companies;
+      if (result.status == true) {
+        this.setState({
+          companies,
+        });
+      }
+    }
+  }
+
   handleChange(event){
       console.log(event.target.value);
-      
+      // this.props.dispatch(getSearchResults(event.target.value));
+      if((event.target.value).length >= 1){
+        fetch(`http://localhost:8055/company/${event.target.value}`)
+        .then(response => response.json())
+        .then(result => this.updateQuery(result));
+        console.log(this.state.companies);
+
+      }else{
+        this.setState({
+          companies: []
+        })
+      }
   }
 
   render() {
@@ -25,17 +50,14 @@ class Search extends React.PureComponent {
           <Col>
           <h2>Search for Company Name</h2>
               <FormControl
-                placeholder="Search"
+                placeholder="Search for company E.G (United States...)"
                 aria-label="MTC"
                 onChange={this.handleChange.bind(this)}
               />
               <ListGroup>
-
-                {/* <ListGroup.Item>Cras justo odio</ListGroup.Item>
-                <ListGroup.Item>Dapibus ac facilisis in</ListGroup.Item>
-                <ListGroup.Item>Morbi leo risus</ListGroup.Item>
-                <ListGroup.Item>Porta ac consectetur ac</ListGroup.Item>
-                <ListGroup.Item>Vestibulum at eros</ListGroup.Item> */}
+                {this.state.companies.map((item, i) => (
+                  <ListGroup.Item key={i}>{item.companyName} ({item.holdingsAmount} Holdings)</ListGroup.Item>
+                ))}
               </ListGroup>
     
     
@@ -46,20 +68,7 @@ class Search extends React.PureComponent {
   }
 }
 
-const mapStateToProps = ({ counter }) => ({
-  
-})
-
-const mapDispatchToProps = dispatch =>
-  bindActionCreators(
-    {
-
-    },
-    dispatch
-  )
-
-export default connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Search)
+export default connect(state => ({
+  companies: state.companies,
+}))(Search);
 

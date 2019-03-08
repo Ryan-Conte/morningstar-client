@@ -3,18 +3,16 @@ import { SEARCHCOMP } from './modules/const';
 // import qs from 'qs';
 
 function getSearchResults(query) {
-    
     return dispatch => {
-    
-    
         return axios.get(`http://localhost:8055/company/${query}`).then(res => {
-          console.log(res);
-          return dispatch({
+
+        return dispatch({
             type: SEARCHCOMP,
-            query: res.companies,
-          });
+            companies: res.data.companies,
+        });
+
         }).catch(error => {
-      
+            
         });
 
     };
